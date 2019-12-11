@@ -1,0 +1,22 @@
+C:\Users\dawid\source\repos\Cellar Automata Simulator\Cellar Automata Simulator\bin\Debug\netcoreapp3.0\Cellar Automata Simulator.exe
+C:\Users\dawid\source\repos\Cellar Automata Simulator\Cellar Automata Simulator\bin\Debug\netcoreapp3.0\Cellar Automata Simulator.deps.json
+C:\Users\dawid\source\repos\Cellar Automata Simulator\Cellar Automata Simulator\bin\Debug\netcoreapp3.0\Cellar Automata Simulator.runtimeconfig.json
+C:\Users\dawid\source\repos\Cellar Automata Simulator\Cellar Automata Simulator\bin\Debug\netcoreapp3.0\Cellar Automata Simulator.runtimeconfig.dev.json
+C:\Users\dawid\source\repos\Cellar Automata Simulator\Cellar Automata Simulator\bin\Debug\netcoreapp3.0\Cellar Automata Simulator.dll
+C:\Users\dawid\source\repos\Cellar Automata Simulator\Cellar Automata Simulator\bin\Debug\netcoreapp3.0\Cellar Automata Simulator.pdb
+C:\Users\dawid\source\repos\Cellar Automata Simulator\Cellar Automata Simulator\obj\Debug\netcoreapp3.0\Cellar Automata Simulator.csprojAssemblyReference.cache
+C:\Users\dawid\source\repos\Cellar Automata Simulator\Cellar Automata Simulator\obj\Debug\netcoreapp3.0\Cellar Automata Simulator.AssemblyInfoInputs.cache
+C:\Users\dawid\source\repos\Cellar Automata Simulator\Cellar Automata Simulator\obj\Debug\netcoreapp3.0\Cellar Automata Simulator.AssemblyInfo.cs
+C:\Users\dawid\source\repos\Cellar Automata Simulator\Cellar Automata Simulator\obj\Debug\netcoreapp3.0\Cellar Automata Simulator.dll
+C:\Users\dawid\source\repos\Cellar Automata Simulator\Cellar Automata Simulator\obj\Debug\netcoreapp3.0\Cellar Automata Simulator.pdb
+C:\Users\dawid\source\repos\Cellar Automata Simulator\Cellar Automata Simulator\Cellar Automata Simulator\bin\Debug\netcoreapp3.0\Cellar Automata Simulator.exe
+C:\Users\dawid\source\repos\Cellar Automata Simulator\Cellar Automata Simulator\Cellar Automata Simulator\bin\Debug\netcoreapp3.0\Cellar Automata Simulator.deps.json
+C:\Users\dawid\source\repos\Cellar Automata Simulator\Cellar Automata Simulator\Cellar Automata Simulator\bin\Debug\netcoreapp3.0\Cellar Automata Simulator.runtimeconfig.json
+C:\Users\dawid\source\repos\Cellar Automata Simulator\Cellar Automata Simulator\Cellar Automata Simulator\bin\Debug\netcoreapp3.0\Cellar Automata Simulator.runtimeconfig.dev.json
+C:\Users\dawid\source\repos\Cellar Automata Simulator\Cellar Automata Simulator\Cellar Automata Simulator\bin\Debug\netcoreapp3.0\Cellar Automata Simulator.dll
+C:\Users\dawid\source\repos\Cellar Automata Simulator\Cellar Automata Simulator\Cellar Automata Simulator\bin\Debug\netcoreapp3.0\Cellar Automata Simulator.pdb
+C:\Users\dawid\source\repos\Cellar Automata Simulator\Cellar Automata Simulator\Cellar Automata Simulator\obj\Debug\netcoreapp3.0\Cellar Automata Simulator.csprojAssemblyReference.cache
+C:\Users\dawid\source\repos\Cellar Automata Simulator\Cellar Automata Simulator\Cellar Automata Simulator\obj\Debug\netcoreapp3.0\Cellar Automata Simulator.AssemblyInfoInputs.cache
+C:\Users\dawid\source\repos\Cellar Automata Simulator\Cellar Automata Simulator\Cellar Automata Simulator\obj\Debug\netcoreapp3.0\Cellar Automata Simulator.AssemblyInfo.cs
+C:\Users\dawid\source\repos\Cellar Automata Simulator\Cellar Automata Simulator\Cellar Automata Simulator\obj\Debug\netcoreapp3.0\Cellar Automata Simulator.dll
+C:\Users\dawid\source\repos\Cellar Automata Simulator\Cellar Automata Simulator\Cellar Automata Simulator\obj\Debug\netcoreapp3.0\Cellar Automata Simulator.pdb

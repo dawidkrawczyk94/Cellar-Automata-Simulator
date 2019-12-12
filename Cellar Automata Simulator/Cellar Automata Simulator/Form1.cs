@@ -396,6 +396,7 @@ namespace Cellar_Automata_Simulator
 
         private Color neumann_function(int x, int y, List<List<Color>> bitmapValues)
         {
+            List<Color> neighboors = new List<Color>();
             var nbh1_x = x - 1;
             var nbh1_y = y;
             var nbh2_x = x + 1;
@@ -407,39 +408,31 @@ namespace Cellar_Automata_Simulator
             var inclusion_color = Color.Black;
 
             if (nbh1_x > -1 && bitmapValues[nbh1_y][nbh1_x].Name != "0" && bitmapValues[nbh1_y][nbh1_x].Name != inclusion_color_name)
+            { neighboors.Add(bitmapValues[nbh1_y][nbh1_x]); }
+
+            if (nbh2_x < width && bitmapValues[nbh2_y][nbh2_x].Name != "0" && bitmapValues[nbh2_y][nbh2_x].Name != inclusion_color_name)
+            { neighboors.Add(bitmapValues[nbh2_y][nbh2_x]); }
+
+            if (nbh3_y > -1 && bitmapValues[nbh3_y][nbh3_x].Name != "0" && bitmapValues[nbh3_y][nbh3_x].Name != inclusion_color_name)
+            { neighboors.Add(bitmapValues[nbh3_y][nbh3_x]); }
+
+            if (nbh4_y < height && bitmapValues[nbh4_y][nbh4_x].Name != "0" && bitmapValues[nbh4_y][nbh4_x].Name != inclusion_color_name)
+            { neighboors.Add(bitmapValues[nbh4_y][nbh4_x]); }
+
+            if (neighboors.Count() == 0)
             {
-                return bitmapValues[nbh1_y][nbh1_x];
+                return bitmapValues[y][x];
             }
             else
             {
-                if (nbh2_x < width && bitmapValues[nbh2_y][nbh2_x].Name != "0" && bitmapValues[nbh2_y][nbh2_x].Name != inclusion_color_name)
-                {
-                    return bitmapValues[nbh2_y][nbh2_x];
-                }
-                else
-                {
-                    if (nbh3_y > -1 && bitmapValues[nbh3_y][nbh3_x].Name != "0" && bitmapValues[nbh3_y][nbh3_x].Name != inclusion_color_name)
-                    {
-                        return bitmapValues[nbh3_y][nbh3_x];
-                    }
-                    else
-                    {
-                        if (nbh4_y < height && bitmapValues[nbh4_y][nbh4_x].Name != "0" && bitmapValues[nbh4_y][nbh4_x].Name != inclusion_color_name)
-                        {
-                            return bitmapValues[nbh4_y][nbh4_x];
-                        }
-                        else
-                        {
-                            return bitmapValues[y][x];
-                        }
-
-                    }
-                }
+                neighboors.GroupBy(elem => elem).OrderBy(elem => elem.Count());
+                return neighboors[0];
             }
         }
 
         public Color moor_function(int x, int y, List<List<Color>> bitmapValues)
         {
+            List<Color> neighboors = new List<Color>();
             var nbh1_x = x - 1;
             var nbh1_y = y - 1;
             var nbh2_x = x + 1;
@@ -451,92 +444,118 @@ namespace Cellar_Automata_Simulator
 
 
             if (nbh1_x > -1 && nbh1_y > -1 && bitmapValues[nbh1_y][nbh1_x].Name != "0" && bitmapValues[nbh1_y][nbh1_x].Name != inclusion_color_name)
+            { neighboors.Add(bitmapValues[nbh1_y][nbh1_x]); }
+
+            if (nbh2_x < width && nbh2_y > -1 && bitmapValues[nbh2_y][nbh2_x].Name != "0" && bitmapValues[nbh2_y][nbh2_x].Name != inclusion_color_name)
+            { neighboors.Add(bitmapValues[nbh2_y][nbh2_x]); }
+
+            if (nbh3_x > -1 && nbh3_y < height && bitmapValues[nbh3_y][nbh3_x].Name != "0" && bitmapValues[nbh3_y][nbh3_x].Name != inclusion_color_name)
+            { neighboors.Add(bitmapValues[nbh3_y][nbh3_x]); }
+
+            if (nbh4_x < width && nbh4_y < height && bitmapValues[nbh4_y][nbh4_x].Name != "0" && bitmapValues[nbh4_y][nbh4_x].Name != inclusion_color_name)
+            { neighboors.Add(bitmapValues[nbh4_y][nbh4_x]); }
+
+            if (neighboors.Count() == 0)
             {
-                return bitmapValues[nbh1_y][nbh1_x];
+                return bitmapValues[y][x];
             }
             else
             {
-                if (nbh2_x < width && nbh2_y > -1 && bitmapValues[nbh2_y][nbh2_x].Name != "0" && bitmapValues[nbh2_y][nbh2_x].Name != inclusion_color_name)
-                {
-                    return bitmapValues[nbh2_y][nbh2_x];
-                }
-                else
-                {
-                    if (nbh3_x > -1 && nbh3_y < height && bitmapValues[nbh3_y][nbh3_x].Name != "0" && bitmapValues[nbh3_y][nbh3_x].Name != inclusion_color_name)
-                    {
-                        return bitmapValues[nbh3_y][nbh3_x];
-                    }
-                    else
-                    {
-                        if (nbh4_x < width && nbh4_y < height && bitmapValues[nbh4_y][nbh4_x].Name != "0" && bitmapValues[nbh4_y][nbh4_x].Name != inclusion_color_name)
-                        {
-                            return bitmapValues[nbh4_y][nbh4_x];
-                        }
-                        else
-                        {
-                            return bitmapValues[y][x];
-                        }
-
-                    }
-                }
+                neighboors.GroupBy(elem => elem).OrderBy(elem => elem.Count());
+                return neighboors[0];
             }
 
         }
 
         public Color hexagonal_function_left(int x, int y, List<List<Color>> bitmapValues)
         {
+            List<Color> neighboors = new List<Color>();
             var nbh1_x = x - 1;
-            var nbh1_y = y - 1;
-            var nbh4_x = x + 1;
+            var nbh1_y = y;
+            var nbh2_x = x + 1;
+            var nbh2_y = y;
+            var nbh3_x = x;
+            var nbh3_y = y - 1;
+            var nbh4_x = x;
             var nbh4_y = y + 1;
+            var nbh5_x = x - 1;
+            var nbh5_y = y - 1;
+            var nbh6_x = x + 1;
+            var nbh6_y = y + 1;
 
+            if (nbh1_x > -1 && bitmapValues[nbh1_y][nbh1_x].Name != "0" && bitmapValues[nbh1_y][nbh1_x].Name != inclusion_color_name)
+            { neighboors.Add(bitmapValues[nbh1_y][nbh1_x]); }
 
-            if (nbh1_x > -1 && nbh1_y > -1 && bitmapValues[nbh1_y][nbh1_x].Name != "0" && bitmapValues[nbh1_y][nbh1_x].Name != inclusion_color_name)
+            if (nbh2_x < width && bitmapValues[nbh2_y][nbh2_x].Name != "0" && bitmapValues[nbh2_y][nbh2_x].Name != inclusion_color_name)
+            { neighboors.Add(bitmapValues[nbh2_y][nbh2_x]); }
+
+            if (nbh3_y > -1 && bitmapValues[nbh3_y][nbh3_x].Name != "0" && bitmapValues[nbh3_y][nbh3_x].Name != inclusion_color_name)
+            { neighboors.Add(bitmapValues[nbh3_y][nbh3_x]); }
+
+            if (nbh4_y < height && bitmapValues[nbh4_y][nbh4_x].Name != "0" && bitmapValues[nbh4_y][nbh4_x].Name != inclusion_color_name)
+            { neighboors.Add(bitmapValues[nbh4_y][nbh4_x]); }
+
+            if (nbh5_x > -1 && nbh5_y > -1 && bitmapValues[nbh5_y][nbh5_x].Name != "0" && bitmapValues[nbh5_y][nbh5_x].Name != inclusion_color_name)
+            { neighboors.Add(bitmapValues[nbh5_y][nbh5_x]); }
+
+            if (nbh6_x < width && nbh6_y < height && bitmapValues[nbh6_y][nbh6_x].Name != "0" && bitmapValues[nbh6_y][nbh6_x].Name != inclusion_color_name)
+            { neighboors.Add(bitmapValues[nbh6_y][nbh6_x]); }
+
+            if (neighboors.Count() == 0)
             {
-                return bitmapValues[nbh1_y][nbh1_x];
+                return bitmapValues[y][x];
             }
             else
             {
-
-                if (nbh4_x < width && nbh4_y < height && bitmapValues[nbh4_y][nbh4_x].Name != "0" && bitmapValues[nbh4_y][nbh4_x].Name != inclusion_color_name)
-                {
-                    return bitmapValues[nbh4_y][nbh4_x];
-                }
-                else
-                {
-                    return bitmapValues[y][x];
-                }
-
+                neighboors.GroupBy(elem => elem).OrderBy(elem => elem.Count());
+                return neighboors[0];
             }
 
         }
 
         public Color hexagonal_function_right(int x, int y, List<List<Color>> bitmapValues)
         {
+            List<Color> neighboors = new List<Color>();
+            var nbh1_x = x - 1;
+            var nbh1_y = y;
             var nbh2_x = x + 1;
-            var nbh2_y = y - 1;
-            var nbh3_x = x - 1;
-            var nbh3_y = y + 1;
+            var nbh2_y = y;
+            var nbh3_x = x;
+            var nbh3_y = y - 1;
+            var nbh4_x = x;
+            var nbh4_y = y + 1;
+            var nbh5_x = x + 1;
+            var nbh5_y = y - 1;
+            var nbh6_x = x - 1;
+            var nbh6_y = y + 1;
 
 
+            if (nbh1_x > -1 && bitmapValues[nbh1_y][nbh1_x].Name != "0" && bitmapValues[nbh1_y][nbh1_x].Name != inclusion_color_name)
+            { neighboors.Add(bitmapValues[nbh1_y][nbh1_x]); }
 
+            if (nbh2_x < width && bitmapValues[nbh2_y][nbh2_x].Name != "0" && bitmapValues[nbh2_y][nbh2_x].Name != inclusion_color_name)
+            { neighboors.Add(bitmapValues[nbh2_y][nbh2_x]); }
 
-            if (nbh2_x < width && nbh2_y > -1 && bitmapValues[nbh2_y][nbh2_x].Name != "0" && bitmapValues[nbh2_y][nbh2_x].Name != inclusion_color_name)
+            if (nbh3_y > -1 && bitmapValues[nbh3_y][nbh3_x].Name != "0" && bitmapValues[nbh3_y][nbh3_x].Name != inclusion_color_name)
+            { neighboors.Add(bitmapValues[nbh3_y][nbh3_x]); }
+
+            if (nbh4_y < height && bitmapValues[nbh4_y][nbh4_x].Name != "0" && bitmapValues[nbh4_y][nbh4_x].Name != inclusion_color_name)
+            { neighboors.Add(bitmapValues[nbh4_y][nbh4_x]); }
+
+            if (nbh5_x < width && nbh5_y > -1 && bitmapValues[nbh5_y][nbh5_x].Name != "0" && bitmapValues[nbh5_y][nbh5_x].Name != inclusion_color_name)
+            { neighboors.Add(bitmapValues[nbh5_y][nbh5_x]); }
+
+            if (nbh6_x > -1 && nbh6_y < height && bitmapValues[nbh6_y][nbh6_x].Name != "0" && bitmapValues[nbh6_y][nbh6_x].Name != inclusion_color_name)
+            { neighboors.Add(bitmapValues[nbh6_y][nbh6_x]); }
+
+            if (neighboors.Count() == 0)
             {
-                return bitmapValues[nbh2_y][nbh2_x];
+                return bitmapValues[y][x];
             }
             else
             {
-                if (nbh3_x > -1 && nbh3_y < height && bitmapValues[nbh3_y][nbh3_x].Name != "0" && bitmapValues[nbh3_y][nbh3_x].Name != inclusion_color_name)
-                {
-                    return bitmapValues[nbh3_y][nbh3_x];
-                }
-                else
-                {
-
-                    return bitmapValues[y][x];
-
-                }
+                neighboors.GroupBy(elem => elem).OrderBy(elem => elem.Count());
+                return neighboors[0];
             }
 
 
@@ -544,6 +563,7 @@ namespace Cellar_Automata_Simulator
 
         public Color pentagonal_function_left(int x, int y, List<List<Color>> bitmapValues)
         {
+            List<Color> neighboors = new List<Color>();
             var nbh1_x = x - 1;
             var nbh1_y = y;
             var nbh2_x = x - 1;
@@ -557,48 +577,37 @@ namespace Cellar_Automata_Simulator
 
 
             if (nbh1_x > -1 && bitmapValues[nbh1_y][nbh1_x].Name != "0" && bitmapValues[nbh1_y][nbh1_x].Name != inclusion_color_name)
+            { neighboors.Add(bitmapValues[nbh1_y][nbh1_x]); }
+
+            if (nbh2_x > -1 && nbh2_y > -1 && nbh2_y > -1 && bitmapValues[nbh2_y][nbh2_x].Name != "0" && bitmapValues[nbh2_y][nbh2_x].Name != inclusion_color_name)
+            { neighboors.Add(bitmapValues[nbh2_y][nbh2_x]); }
+
+
+            if (nbh3_y > -1 && bitmapValues[nbh3_y][nbh3_x].Name != "0" && bitmapValues[nbh3_y][nbh3_x].Name != inclusion_color_name)
+            { neighboors.Add(bitmapValues[nbh3_y][nbh3_x]); }
+            
+
+            if (nbh4_y < height && bitmapValues[nbh4_y][nbh4_x].Name != "0" && bitmapValues[nbh4_y][nbh4_x].Name != inclusion_color_name)
+            { neighboors.Add(bitmapValues[nbh4_y][nbh4_x]); }
+
+            if (nbh5_x > -1 && nbh5_y < height && bitmapValues[nbh5_y][nbh5_x].Name != "0" && bitmapValues[nbh5_y][nbh5_x].Name != inclusion_color_name)
+            { neighboors.Add(bitmapValues[nbh5_y][nbh5_x]); }
+
+            if (neighboors.Count() == 0)
             {
-                return bitmapValues[nbh1_y][nbh1_x];
+                return bitmapValues[y][x];
             }
             else
             {
-                if (nbh2_x > -1 && nbh2_y > -1 && nbh2_y > -1 && bitmapValues[nbh2_y][nbh2_x].Name != "0" && bitmapValues[nbh2_y][nbh2_x].Name != inclusion_color_name)
-                {
-                    return bitmapValues[nbh2_y][nbh2_x];
-                }
-                else
-                {
-                    if (nbh3_y > -1 && bitmapValues[nbh3_y][nbh3_x].Name != "0" && bitmapValues[nbh3_y][nbh3_x].Name != inclusion_color_name)
-                    {
-                        return bitmapValues[nbh3_y][nbh3_x];
-                    }
-                    else
-                    {
-                        if (nbh4_y < height && bitmapValues[nbh4_y][nbh4_x].Name != "0" && bitmapValues[nbh4_y][nbh4_x].Name != inclusion_color_name)
-                        {
-                            return bitmapValues[nbh4_y][nbh4_x];
-                        }
-                        else
-                        {
-                            if (nbh5_x > -1 && nbh5_y < height && bitmapValues[nbh5_y][nbh5_x].Name != "0" && bitmapValues[nbh5_y][nbh5_x].Name != inclusion_color_name)
-                            {
-                                return bitmapValues[nbh5_y][nbh5_x];
-                            }
-                            else
-                            {
-                                return bitmapValues[y][x];
-                            }
-                        }
-
-                    }
-                }
+                neighboors.GroupBy(elem => elem).OrderBy(elem => elem.Count());
+                return neighboors[0];
             }
-
 
         }
 
         public Color pentagonal_function_right(int x, int y, List<List<Color>> bitmapValues)
         {
+            List<Color> neighboors = new List<Color>();
             var nbh1_x = x + 1;
             var nbh1_y = y - 1;
             var nbh2_x = x + 1;
@@ -612,43 +621,29 @@ namespace Cellar_Automata_Simulator
 
 
             if (nbh1_x < width && nbh1_y > -1 && bitmapValues[nbh1_y][nbh1_x].Name != "0" && bitmapValues[nbh1_y][nbh1_x].Name != inclusion_color_name)
+            { neighboors.Add(bitmapValues[nbh1_y][nbh1_x]); }
+
+            if (nbh2_x < width && nbh2_y > -1 && bitmapValues[nbh2_y][nbh2_x].Name != "0" && bitmapValues[nbh2_y][nbh2_x].Name != inclusion_color_name)
+            { neighboors.Add(bitmapValues[nbh2_y][nbh2_x]); }
+
+            if (nbh3_y > -1 && bitmapValues[nbh3_y][nbh3_x].Name != "0" && bitmapValues[nbh3_y][nbh3_x].Name != inclusion_color_name)
+            { neighboors.Add(bitmapValues[nbh3_y][nbh3_x]); }
+
+            if (nbh4_y < height && bitmapValues[nbh4_y][nbh4_x].Name != "0" && bitmapValues[nbh4_y][nbh4_x].Name != inclusion_color_name)
+            { neighboors.Add(bitmapValues[nbh4_y][nbh4_x]); }
+
+            if (nbh5_x < width && nbh5_y < height && bitmapValues[nbh5_y][nbh5_x].Name != "0" && bitmapValues[nbh5_y][nbh5_x].Name != inclusion_color_name)
+            { neighboors.Add(bitmapValues[nbh5_y][nbh5_x]); }
+
+            if (neighboors.Count() == 0)
             {
-                return bitmapValues[nbh1_y][nbh1_x];
+                return bitmapValues[y][x];
             }
             else
             {
-                if (nbh2_x < width && nbh2_y > -1 && bitmapValues[nbh2_y][nbh2_x].Name != "0" && bitmapValues[nbh2_y][nbh2_x].Name != inclusion_color_name)
-                {
-                    return bitmapValues[nbh2_y][nbh2_x];
-                }
-                else
-                {
-                    if (nbh3_y > -1 && bitmapValues[nbh3_y][nbh3_x].Name != "0" && bitmapValues[nbh3_y][nbh3_x].Name != inclusion_color_name)
-                    {
-                        return bitmapValues[nbh3_y][nbh3_x];
-                    }
-                    else
-                    {
-                        if (nbh4_y < height && bitmapValues[nbh4_y][nbh4_x].Name != "0" && bitmapValues[nbh4_y][nbh4_x].Name != inclusion_color_name)
-                        {
-                            return bitmapValues[nbh4_y][nbh4_x];
-                        }
-                        else
-                        {
-                            if (nbh5_x < width && nbh5_y < height && bitmapValues[nbh5_y][nbh5_x].Name != "0" && bitmapValues[nbh5_y][nbh5_x].Name != inclusion_color_name)
-                            {
-                                return bitmapValues[nbh5_y][nbh5_x];
-                            }
-                            else
-                            {
-                                return bitmapValues[y][x];
-                            }
-                        }
-
-                    }
-                }
+                neighboors.GroupBy(elem => elem).OrderBy(elem => elem.Count());
+                return neighboors[0];
             }
-
         }
 
         private Color Rule_1(int x, int y, List<List<Color>> bitmapValues)
@@ -689,7 +684,7 @@ namespace Cellar_Automata_Simulator
                 int mostOften = moor_neighboors.Count(a => a == mostOftenCol);
                 if (mostOften > 4)
                 {
-                return mostOftenCol;
+                    return mostOftenCol;
                 }
                 else
                 {
@@ -812,7 +807,6 @@ namespace Cellar_Automata_Simulator
                 {
                     moor_neighboors.GroupBy(elem => elem).OrderBy(elem => elem.Count());
                     Color mostOftenCol = moor_neighboors[0];
-                    int mostOften = moor_neighboors.Count(a => a == mostOftenCol);
                     return mostOftenCol;
                 }
             }

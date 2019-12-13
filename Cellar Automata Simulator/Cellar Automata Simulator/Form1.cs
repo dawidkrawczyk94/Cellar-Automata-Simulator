@@ -939,10 +939,8 @@ namespace Cellar_Automata_Simulator
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    //Get the path of specified file
                     filePath = openFileDialog.FileName;
 
-                    //Read the contents of the file into a stream
                     var fileStream = openFileDialog.OpenFile();
 
                     using (StreamReader reader = new StreamReader(fileStream))
@@ -951,7 +949,8 @@ namespace Cellar_Automata_Simulator
                     }
                 }
             }
-            bmp_now = new Bitmap(filePath);
+            if (filePath != "")
+            { bmp_now = new Bitmap(filePath); }
             main_pct.Image = bmp_now;
         }
     }

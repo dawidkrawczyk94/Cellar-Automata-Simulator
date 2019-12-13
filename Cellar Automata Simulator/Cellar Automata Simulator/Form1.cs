@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Globalization;
+using System.IO;
 
 namespace Cellar_Automata_Simulator
 {
@@ -913,6 +915,44 @@ namespace Cellar_Automata_Simulator
         private void label9_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void exportBt_Click(object sender, EventArgs e)
+        {
+            string localDate = DateTime.Now.ToString("MM.dd.yyyy HH_mm_ss");
+
+            string path = "C:\\Cellar Automata\\" + localDate + ".png";
+            bmp_now.Save(path);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var fileContent = string.Empty;
+            var filePath = string.Empty;
+
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = "C:\\Cellar Automata\\";
+                openFileDialog.Filter = "png files (*.png)|*.png|All files (*.*)|*.*";
+                openFileDialog.FilterIndex = 2;
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //Get the path of specified file
+                    filePath = openFileDialog.FileName;
+
+                    //Read the contents of the file into a stream
+                    var fileStream = openFileDialog.OpenFile();
+
+                    using (StreamReader reader = new StreamReader(fileStream))
+                    {
+                        fileContent = reader.ReadToEnd();
+                    }
+                }
+            }
+            bmp_now = new Bitmap(filePath);
+            main_pct.Image = bmp_now;
         }
     }
 }

@@ -59,6 +59,8 @@
             this.propability_tbox = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
+            this.exportBt = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.main_pct)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.current_color_pct)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.red_pct)).BeginInit();
@@ -367,11 +369,33 @@
             this.label9.Text = "X - probability of change [%]";
             this.label9.Click += new System.EventHandler(this.label9_Click);
             // 
+            // exportBt
+            // 
+            this.exportBt.Location = new System.Drawing.Point(992, 36);
+            this.exportBt.Name = "exportBt";
+            this.exportBt.Size = new System.Drawing.Size(116, 23);
+            this.exportBt.TabIndex = 10;
+            this.exportBt.Text = "Export to BMP";
+            this.exportBt.UseVisualStyleBackColor = true;
+            this.exportBt.Click += new System.EventHandler(this.exportBt_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(992, 66);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(116, 23);
+            this.button2.TabIndex = 11;
+            this.button2.Text = "Import from BMP";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1057, 614);
+            this.ClientSize = new System.Drawing.Size(1114, 614);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.exportBt);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.propability_tbox);
             this.Controls.Add(this.GBCcheck_box);
@@ -452,6 +476,8 @@
         private System.Windows.Forms.TextBox propability_tbox;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button exportBt;
+        private System.Windows.Forms.Button button2;
     }
 }
 

@@ -32,8 +32,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.width_tbox = new System.Windows.Forms.TextBox();
-            this.height_tbox = new System.Windows.Forms.TextBox();
             this.neighboors_cbox = new System.Windows.Forms.ComboBox();
             this.phopt_cbox = new System.Windows.Forms.ComboBox();
             this.start_bt = new System.Windows.Forms.Button();
@@ -41,7 +39,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.main_pct = new System.Windows.Forms.PictureBox();
             this.current_color_pct = new System.Windows.Forms.PictureBox();
             this.red_pct = new System.Windows.Forms.PictureBox();
@@ -56,11 +53,27 @@
             this.clr_bt = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.GBCcheck_box = new System.Windows.Forms.CheckBox();
-            this.propability_tbox = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.exportBt = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.seedsCount = new System.Windows.Forms.NumericUpDown();
+            this.inclusionsCount = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.maxR = new System.Windows.Forms.NumericUpDown();
+            this.minR = new System.Windows.Forms.NumericUpDown();
+            this.xPropability = new System.Windows.Forms.NumericUpDown();
+            this.R = new System.Windows.Forms.NumericUpDown();
+            this.widthBox = new System.Windows.Forms.NumericUpDown();
+            this.heightBox = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.main_pct)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.current_color_pct)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.red_pct)).BeginInit();
@@ -72,6 +85,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.orange_pct)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gray_pct)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.inclusion_pct)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.seedsCount)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.inclusionsCount)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.maxR)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.minR)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.xPropability)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.R)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.widthBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.heightBox)).BeginInit();
             // 
             // label1
             // 
@@ -88,9 +110,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(129, 10);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(39, 15);
+            this.label2.Size = new System.Drawing.Size(43, 15);
             this.label2.TabIndex = 0;
-            this.label2.Text = "Heigh";
+            this.label2.Text = "Height";
             this.label2.Click += new System.EventHandler(this.label1_Click);
             // 
             // label3
@@ -112,22 +134,6 @@
             this.label4.TabIndex = 0;
             this.label4.Text = "Pentagonal/Hexagonal options";
             this.label4.Click += new System.EventHandler(this.label1_Click);
-            // 
-            // width_tbox
-            // 
-            this.width_tbox.Location = new System.Drawing.Point(13, 37);
-            this.width_tbox.Name = "width_tbox";
-            this.width_tbox.Size = new System.Drawing.Size(100, 23);
-            this.width_tbox.TabIndex = 1;
-            this.width_tbox.TextChanged += new System.EventHandler(this.width_tbox_TextChanged);
-            // 
-            // height_tbox
-            // 
-            this.height_tbox.Location = new System.Drawing.Point(129, 37);
-            this.height_tbox.Name = "height_tbox";
-            this.height_tbox.Size = new System.Drawing.Size(100, 23);
-            this.height_tbox.TabIndex = 1;
-            this.height_tbox.TextChanged += new System.EventHandler(this.height_tbox_TextChanged);
             // 
             // neighboors_cbox
             // 
@@ -174,19 +180,21 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(911, 114);
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label5.Location = new System.Drawing.Point(890, 102);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(65, 15);
+            this.label5.Size = new System.Drawing.Size(51, 21);
             this.label5.TabIndex = 0;
-            this.label5.Text = "Grain color";
+            this.label5.Text = "Seeds";
             this.label5.Click += new System.EventHandler(this.label1_Click);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(911, 341);
+            this.label6.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label6.Location = new System.Drawing.Point(898, 327);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(55, 15);
+            this.label6.Size = new System.Drawing.Size(72, 21);
             this.label6.TabIndex = 0;
             this.label6.Text = "Inclusion";
             this.label6.Click += new System.EventHandler(this.label1_Click);
@@ -194,20 +202,12 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(891, 369);
+            this.label7.Location = new System.Drawing.Point(984, 363);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(19, 15);
             this.label7.TabIndex = 0;
             this.label7.Text = "r=";
             this.label7.Click += new System.EventHandler(this.label1_Click);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(911, 366);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(48, 23);
-            this.textBox1.TabIndex = 1;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // main_pct
             // 
@@ -222,16 +222,16 @@
             // current_color_pct
             // 
             this.current_color_pct.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.current_color_pct.Location = new System.Drawing.Point(840, 154);
+            this.current_color_pct.Location = new System.Drawing.Point(952, 204);
             this.current_color_pct.Name = "current_color_pct";
-            this.current_color_pct.Size = new System.Drawing.Size(70, 70);
+            this.current_color_pct.Size = new System.Drawing.Size(51, 52);
             this.current_color_pct.TabIndex = 4;
             this.current_color_pct.TabStop = false;
             this.current_color_pct.Click += new System.EventHandler(this.current_color_pct_Click);
             // 
             // red_pct
             // 
-            this.red_pct.Location = new System.Drawing.Point(933, 154);
+            this.red_pct.Location = new System.Drawing.Point(1009, 143);
             this.red_pct.Name = "red_pct";
             this.red_pct.Size = new System.Drawing.Size(30, 30);
             this.red_pct.TabIndex = 4;
@@ -240,7 +240,7 @@
             // 
             // green_pct
             // 
-            this.green_pct.Location = new System.Drawing.Point(969, 154);
+            this.green_pct.Location = new System.Drawing.Point(1045, 143);
             this.green_pct.Name = "green_pct";
             this.green_pct.Size = new System.Drawing.Size(30, 30);
             this.green_pct.TabIndex = 4;
@@ -249,7 +249,7 @@
             // 
             // yellow_pct
             // 
-            this.yellow_pct.Location = new System.Drawing.Point(969, 190);
+            this.yellow_pct.Location = new System.Drawing.Point(1045, 179);
             this.yellow_pct.Name = "yellow_pct";
             this.yellow_pct.Size = new System.Drawing.Size(30, 30);
             this.yellow_pct.TabIndex = 4;
@@ -258,7 +258,7 @@
             // 
             // blue_pct
             // 
-            this.blue_pct.Location = new System.Drawing.Point(933, 190);
+            this.blue_pct.Location = new System.Drawing.Point(1009, 179);
             this.blue_pct.Name = "blue_pct";
             this.blue_pct.Size = new System.Drawing.Size(30, 30);
             this.blue_pct.TabIndex = 4;
@@ -267,7 +267,7 @@
             // 
             // pink_pct
             // 
-            this.pink_pct.Location = new System.Drawing.Point(969, 226);
+            this.pink_pct.Location = new System.Drawing.Point(1045, 215);
             this.pink_pct.Name = "pink_pct";
             this.pink_pct.Size = new System.Drawing.Size(30, 30);
             this.pink_pct.TabIndex = 4;
@@ -276,7 +276,7 @@
             // 
             // brown_pct
             // 
-            this.brown_pct.Location = new System.Drawing.Point(933, 226);
+            this.brown_pct.Location = new System.Drawing.Point(1009, 215);
             this.brown_pct.Name = "brown_pct";
             this.brown_pct.Size = new System.Drawing.Size(30, 30);
             this.brown_pct.TabIndex = 4;
@@ -285,7 +285,7 @@
             // 
             // orange_pct
             // 
-            this.orange_pct.Location = new System.Drawing.Point(933, 262);
+            this.orange_pct.Location = new System.Drawing.Point(1009, 251);
             this.orange_pct.Name = "orange_pct";
             this.orange_pct.Size = new System.Drawing.Size(30, 30);
             this.orange_pct.TabIndex = 4;
@@ -294,7 +294,7 @@
             // 
             // gray_pct
             // 
-            this.gray_pct.Location = new System.Drawing.Point(969, 262);
+            this.gray_pct.Location = new System.Drawing.Point(1045, 251);
             this.gray_pct.Name = "gray_pct";
             this.gray_pct.Size = new System.Drawing.Size(30, 30);
             this.gray_pct.TabIndex = 4;
@@ -304,7 +304,7 @@
             // inclusion_pct
             // 
             this.inclusion_pct.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.inclusion_pct.Location = new System.Drawing.Point(906, 408);
+            this.inclusion_pct.Location = new System.Drawing.Point(1004, 402);
             this.inclusion_pct.Name = "inclusion_pct";
             this.inclusion_pct.Size = new System.Drawing.Size(70, 70);
             this.inclusion_pct.TabIndex = 4;
@@ -342,13 +342,6 @@
             this.GBCcheck_box.UseVisualStyleBackColor = true;
             this.GBCcheck_box.CheckedChanged += new System.EventHandler(this.GBCcheck_box_CheckedChanged);
             // 
-            // propability_tbox
-            // 
-            this.propability_tbox.Location = new System.Drawing.Point(589, 62);
-            this.propability_tbox.Name = "propability_tbox";
-            this.propability_tbox.Size = new System.Drawing.Size(41, 23);
-            this.propability_tbox.TabIndex = 8;
-            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -375,7 +368,7 @@
             this.exportBt.Name = "exportBt";
             this.exportBt.Size = new System.Drawing.Size(116, 23);
             this.exportBt.TabIndex = 10;
-            this.exportBt.Text = "Export to BMP";
+            this.exportBt.Text = "Export Bitmap";
             this.exportBt.UseVisualStyleBackColor = true;
             this.exportBt.Click += new System.EventHandler(this.exportBt_Click);
             // 
@@ -385,37 +378,214 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(116, 23);
             this.button2.TabIndex = 11;
-            this.button2.Text = "Import from BMP";
+            this.button2.Text = "Import Bitmap";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(860, 172);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 12;
+            this.button3.Text = "Add seeds";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(860, 449);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(98, 23);
+            this.button4.TabIndex = 13;
+            this.button4.Text = "Add inclusions";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(823, 146);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(48, 15);
+            this.label10.TabIndex = 15;
+            this.label10.Text = "Count=";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(843, 363);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(48, 15);
+            this.label11.TabIndex = 15;
+            this.label11.Text = "Count=";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(1212, 513);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(19, 15);
+            this.label12.TabIndex = 0;
+            this.label12.Text = "r=";
+            this.label12.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(1212, 513);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(19, 15);
+            this.label13.TabIndex = 0;
+            this.label13.Text = "r=";
+            this.label13.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(860, 421);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(48, 15);
+            this.label14.TabIndex = 0;
+            this.label14.Text = "Max. r=";
+            this.label14.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(860, 392);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(46, 15);
+            this.label15.TabIndex = 0;
+            this.label15.Text = "Min. r=";
+            this.label15.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // seedsCount
+            // 
+            this.seedsCount.Location = new System.Drawing.Point(877, 143);
+            this.seedsCount.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.seedsCount.Name = "seedsCount";
+            this.seedsCount.Size = new System.Drawing.Size(63, 23);
+            this.seedsCount.TabIndex = 18;
+            // 
+            // inclusionsCount
+            // 
+            this.inclusionsCount.Location = new System.Drawing.Point(890, 360);
+            this.inclusionsCount.Name = "inclusionsCount";
+            this.inclusionsCount.Size = new System.Drawing.Size(63, 23);
+            this.inclusionsCount.TabIndex = 18;
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(1288, 512);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(63, 23);
+            this.numericUpDown1.TabIndex = 18;
+            // 
+            // maxR
+            // 
+            this.maxR.Location = new System.Drawing.Point(907, 419);
+            this.maxR.Maximum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.maxR.Name = "maxR";
+            this.maxR.Size = new System.Drawing.Size(63, 23);
+            this.maxR.TabIndex = 18;
+            // 
+            // minR
+            // 
+            this.minR.Location = new System.Drawing.Point(907, 389);
+            this.minR.Maximum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.minR.Name = "minR";
+            this.minR.Size = new System.Drawing.Size(63, 23);
+            this.minR.TabIndex = 18;
+            // 
+            // xPropability
+            // 
+            this.xPropability.Location = new System.Drawing.Point(589, 66);
+            this.xPropability.Name = "xPropability";
+            this.xPropability.Size = new System.Drawing.Size(41, 23);
+            this.xPropability.TabIndex = 19;
+            // 
+            // R
+            // 
+            this.R.Location = new System.Drawing.Point(1004, 360);
+            this.R.Maximum = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+            this.R.Name = "R";
+            this.R.Size = new System.Drawing.Size(63, 23);
+            this.R.TabIndex = 18;
+            this.R.ValueChanged += new System.EventHandler(this.R_ValueChanged);
+            // 
+            // widthBox
+            // 
+            this.widthBox.Location = new System.Drawing.Point(19, 36);
+            this.widthBox.Maximum = new decimal(new int[] {
+            600,
+            0,
+            0,
+            0});
+            this.widthBox.Name = "widthBox";
+            this.widthBox.Size = new System.Drawing.Size(91, 23);
+            this.widthBox.TabIndex = 20;
+            this.widthBox.ValueChanged += new System.EventHandler(this.widthBox_ValueChanged);
+            // 
+            // heightBox
+            // 
+            this.heightBox.Location = new System.Drawing.Point(129, 36);
+            this.heightBox.Maximum = new decimal(new int[] {
+            600,
+            0,
+            0,
+            0});
+            this.heightBox.Name = "heightBox";
+            this.heightBox.Size = new System.Drawing.Size(87, 23);
+            this.heightBox.TabIndex = 21;
+            this.heightBox.ValueChanged += new System.EventHandler(this.numericUpDown2_ValueChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1114, 614);
+            this.Controls.Add(this.heightBox);
+            this.Controls.Add(this.widthBox);
+            this.Controls.Add(this.xPropability);
+            this.Controls.Add(this.seedsCount);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.button4);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.exportBt);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.propability_tbox);
             this.Controls.Add(this.GBCcheck_box);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.clr_bt);
             this.Controls.Add(this.main_pct);
             this.Controls.Add(this.start_bt);
             this.Controls.Add(this.neighboors_cbox);
-            this.Controls.Add(this.width_tbox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.height_tbox);
             this.Controls.Add(this.phopt_cbox);
             this.Controls.Add(this.step_bt);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.current_color_pct);
             this.Controls.Add(this.red_pct);
             this.Controls.Add(this.green_pct);
@@ -426,6 +596,16 @@
             this.Controls.Add(this.orange_pct);
             this.Controls.Add(this.gray_pct);
             this.Controls.Add(this.inclusion_pct);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.label15);
+            this.Controls.Add(this.inclusionsCount);
+            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.maxR);
+            this.Controls.Add(this.minR);
+            this.Controls.Add(this.R);
             this.Name = "Form1";
             this.Text = "Cellar Automata";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -440,6 +620,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.orange_pct)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gray_pct)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.inclusion_pct)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.seedsCount)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.inclusionsCount)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.maxR)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.minR)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.xPropability)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.R)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.widthBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.heightBox)).EndInit();
 
         }
 
@@ -449,8 +638,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox width_tbox;
-        private System.Windows.Forms.TextBox height_tbox;
         private System.Windows.Forms.ComboBox neighboors_cbox;
         private System.Windows.Forms.ComboBox phopt_cbox;
         private System.Windows.Forms.Button start_bt;
@@ -458,7 +645,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.PictureBox main_pct;
         private System.Windows.Forms.PictureBox current_color_pct;
         private System.Windows.Forms.PictureBox red_pct;
@@ -473,11 +659,27 @@
         private System.Windows.Forms.Button clr_bt;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.CheckBox GBCcheck_box;
-        private System.Windows.Forms.TextBox propability_tbox;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button exportBt;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.NumericUpDown seedsCount;
+        private System.Windows.Forms.NumericUpDown inclusionsCount;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown maxR;
+        private System.Windows.Forms.NumericUpDown minR;
+        private System.Windows.Forms.NumericUpDown xPropability;
+        private System.Windows.Forms.NumericUpDown R;
+        private System.Windows.Forms.NumericUpDown widthBox;
+        private System.Windows.Forms.NumericUpDown heightBox;
     }
 }
 

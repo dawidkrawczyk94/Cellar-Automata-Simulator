@@ -18,8 +18,8 @@ namespace Cellar_Automata_Simulator
         private static Color current_color;
         private static Bitmap bmp_now = new Bitmap(1000, 1000);
         private static Graphics gph_now = Graphics.FromImage(bmp_now);
-        private static int width;
-        private static int height;
+        private static int width = 500;
+        private static int height = 500;
         private static bool if_inclusion;
         private static int empty_cell_counter;
         private bool whileFlag;
@@ -79,34 +79,27 @@ namespace Cellar_Automata_Simulator
             gray_pct.BackColor = Color.Gray;
             if_inclusion = false;
             neighboors_cbox.Text = "von Neumanna";
+            widthBox.Value = width;
+            heightBox.Value = height;
+            xPropability.Value = 80;
 
         }
 
         private void width_tbox_TextChanged(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(width_tbox.Text))
+            if (widthBox.Value>0)
             {
-
-            }
-            else
-            {
-                width = System.Convert.ToInt32(width_tbox.Text);
+                width = Decimal.ToInt32(widthBox.Value);
                 main_pct.Size = new System.Drawing.Size(width, main_pct.Height);
-                empty_cell_counter = width * height;
             }
         }
 
         private void height_tbox_TextChanged(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(height_tbox.Text))
+            if (heightBox.Value>0)
             {
-
-            }
-            else
-            {
-                height = System.Convert.ToInt32(height_tbox.Text);
+                height = Decimal.ToInt32(heightBox.Value);
                 main_pct.Size = new System.Drawing.Size(main_pct.Width, height);
-                empty_cell_counter = width * height;
             }
         }
 
@@ -171,9 +164,9 @@ namespace Cellar_Automata_Simulator
 
             if (if_inclusion)
             {
-                if (textBox1.Text != "")
+                if (R.Value > 0)
                 {
-                    Rectangle rect = new Rectangle(MousePosition.X - this.Location.X - main_pct.Location.X - 4, MousePosition.Y - this.Location.Y - main_pct.Location.Y - 30, System.Convert.ToInt32(textBox1.Text) * 2, System.Convert.ToInt32(textBox1.Text) * 2);
+                    Rectangle rect = new Rectangle(MousePosition.X - this.Location.X - main_pct.Location.X - 4, MousePosition.Y - this.Location.Y - main_pct.Location.Y - 30, Decimal.ToInt32(R.Value) * 2, Decimal.ToInt32(R.Value)*2);
                     SolidBrush grayBrush = new SolidBrush(Color.Black);
                     var gph_n = Graphics.FromImage(bmp_now);
                     gph_n.FillEllipse(grayBrush, rect);
@@ -207,11 +200,11 @@ namespace Cellar_Automata_Simulator
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            if (textBox1.Text != "")
+            if (R.Value>0)
             {
                 Bitmap bm = new Bitmap(inclusion_pct.Width, inclusion_pct.Height);
                 Graphics gr = Graphics.FromImage(bm);
-                Rectangle rect = new Rectangle(inclusion_pct.Width / 2 - System.Convert.ToInt32(textBox1.Text), inclusion_pct.Height / 2 - System.Convert.ToInt32(textBox1.Text), System.Convert.ToInt32(textBox1.Text) * 2, System.Convert.ToInt32(textBox1.Text) * 2);
+                Rectangle rect = new Rectangle(inclusion_pct.Width / 2 - Decimal.ToInt32(R.Value), inclusion_pct.Height / 2 - Decimal.ToInt32(R.Value), Decimal.ToInt32(R.Value) * 2, Decimal.ToInt32(R.Value) * 2);
                 SolidBrush grayBrush = new SolidBrush(Color.Black);
                 gr.FillEllipse(grayBrush, rect);
                 inclusion_pct.Image = bm;
@@ -774,7 +767,7 @@ namespace Cellar_Automata_Simulator
         {
             Random rnd = new Random();
             int random = rnd.Next(0, 101);
-            if(random<= System.Convert.ToInt32(propability_tbox.Text))
+            if(random<= xPropability.Value)
             { 
                 List<Color> moor_neighboors = new List<Color>();
                 if (y - 1 > -1 && bitmapValues[y - 1][x].Name != "0" && bitmapValues[y - 1][x].Name != inclusion_color_name)
@@ -899,7 +892,6 @@ namespace Cellar_Automata_Simulator
                         neighboors_cbox.Text = "Moore’a";
                         neighboors_cbox.Enabled = false;
                         phopt_cbox.Enabled = false;
-                        propability_tbox.Text = "80";
                         break;
                     }
                 case false:
@@ -952,6 +944,68 @@ namespace Cellar_Automata_Simulator
             if (filePath != "")
             { bmp_now = new Bitmap(filePath); }
             main_pct.Image = bmp_now;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Random rnd = new Random();
+            for(int i=0; i<seedsCount.Value+1;i++)
+            { 
+            int random_x = rnd.Next(0, main_pct.Width);
+            int random_y = rnd.Next(0, main_pct.Height);
+            Color random_color = Color.FromArgb(255, rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256));
+                bmp_now.SetPixel(random_x, random_y, random_color);
+            }
+            main_pct.Image = bmp_now;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < inclusionsCount.Value+1; i++)
+            {
+                Random rnd = new Random();
+                int random_x = rnd.Next(0, main_pct.Width);
+                int random_y = rnd.Next(0, main_pct.Height);
+                int random_r = rnd.Next(Decimal.ToInt32(minR.Value), Decimal.ToInt32(maxR.Value));
+                Rectangle rect = new Rectangle(random_x, random_y, random_r * 2, random_r * 2);
+                SolidBrush grayBrush = new SolidBrush(Color.Black);
+                var gph_n = Graphics.FromImage(bmp_now);
+                gph_n.FillEllipse(grayBrush, rect);
+                
+            }
+            main_pct.Image = bmp_now;
+        }
+
+        private void R_ValueChanged(object sender, EventArgs e)
+        {
+            if (R.Value > 0)
+            {
+                Bitmap bm = new Bitmap(inclusion_pct.Width, inclusion_pct.Height);
+                Graphics gr = Graphics.FromImage(bm);
+                Rectangle rect = new Rectangle(inclusion_pct.Width / 2 - Decimal.ToInt32(R.Value), inclusion_pct.Height / 2 - Decimal.ToInt32(R.Value), Decimal.ToInt32(R.Value) * 2, Decimal.ToInt32(R.Value) * 2);
+                SolidBrush grayBrush = new SolidBrush(Color.Black);
+                gr.FillEllipse(grayBrush, rect);
+                inclusion_pct.Image = bm;
+                if_inclusion = true;
+            }
+        }
+
+        private void widthBox_ValueChanged(object sender, EventArgs e)
+        {
+            if (widthBox.Value > 0)
+            {
+                width = Decimal.ToInt32(widthBox.Value);
+                main_pct.Size = new System.Drawing.Size(width, main_pct.Height);
+            }
+        }
+
+        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
+        {
+            if (heightBox.Value > 0)
+            {
+                height = Decimal.ToInt32(heightBox.Value);
+                main_pct.Size = new System.Drawing.Size(main_pct.Width, height);
+            }
         }
     }
 }

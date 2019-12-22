@@ -21,12 +21,13 @@ namespace Cellar_Automata_Simulator
         private static int width = 500;
         private static int height = 500;
         private static bool if_inclusion;
-        private static int empty_cell_counter;
         private bool whileFlag;
         private bool step;
-        private string inclusion_color_name = "ff000000";
+        private readonly string inclusion_color_name = "ff000000";
+        private readonly string phase_color_name = "ffff1493";
+        private Color phase_color = Color.DeepPink;
         private bool GBC = false;
-
+        private List<string> selected_color_list = new List<string>();
         public Form1()
         {
             InitializeComponent();
@@ -42,46 +43,35 @@ namespace Cellar_Automata_Simulator
             switch (neighboors_cbox.SelectedItem)
             {
                 case "von Neumanna":
-                    phopt_cbox.Items.Clear();
-                    phopt_cbox.Text = "";
+                    phopt_cbox.Enabled = false;
                     break;
 
                 case "Moore’a":
-                    phopt_cbox.Items.Clear();
-                    phopt_cbox.Text = "";
+                    phopt_cbox.Enabled = false;
                     break;
                 case "Hexagonal":
-                    phopt_cbox.Items.Clear();
-                    phopt_cbox.Items.Add("left");
-                    phopt_cbox.Items.Add("right");
-                    phopt_cbox.Items.Add("random");
-                    phopt_cbox.Text = "random";
+                    phopt_cbox.Enabled = true;
                     break;
                 case "Pentagonal":
-                    phopt_cbox.Items.Clear();
-                    phopt_cbox.Items.Add("left");
-                    phopt_cbox.Items.Add("right");
-                    phopt_cbox.Items.Add("random");
-                    phopt_cbox.Text = "random";
+                    phopt_cbox.Enabled = true;
                     break;
             }
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            green_pct.BackColor = Color.Green;
-            blue_pct.BackColor = Color.Blue;
-            red_pct.BackColor = Color.Red;
-            yellow_pct.BackColor = Color.Yellow;
-            pink_pct.BackColor = Color.Pink;
-            brown_pct.BackColor = Color.Brown;
-            orange_pct.BackColor = Color.Orange;
-            gray_pct.BackColor = Color.Gray;
             if_inclusion = false;
             neighboors_cbox.Text = "von Neumanna";
             widthBox.Value = width;
             heightBox.Value = height;
             xPropability.Value = 80;
+            phopt_cbox.Items.Add("left");
+            phopt_cbox.Items.Add("right");
+            phopt_cbox.Items.Add("random");
+            phopt_cbox.Text = "random";
+            selected_color_list.Add(inclusion_color_name);
+            selected_color_list.Add(phase_color_name);
+            selected_label.Text = "Selected grain count: " + (selected_color_list.Count() - 2);
 
         }
 
@@ -103,83 +93,49 @@ namespace Cellar_Automata_Simulator
             }
         }
 
-        private void red_pct_Click(object sender, EventArgs e)
-        {
-            current_color = red_pct.BackColor;
-            current_color_pct.BackColor = current_color;
-            if_inclusion = false;
-        }
-
-        private void green_pct_Click(object sender, EventArgs e)
-        {
-            current_color = green_pct.BackColor;
-            current_color_pct.BackColor = current_color;
-            if_inclusion = false;
-        }
-
-        private void blue_pct_Click(object sender, EventArgs e)
-        {
-            current_color = blue_pct.BackColor;
-            current_color_pct.BackColor = current_color;
-            if_inclusion = false;
-        }
-
-        private void yellow_pct_Click(object sender, EventArgs e)
-        {
-            current_color = yellow_pct.BackColor;
-            current_color_pct.BackColor = current_color;
-            if_inclusion = false;
-        }
-
-        private void brown_pct_Click(object sender, EventArgs e)
-        {
-            current_color = brown_pct.BackColor;
-            current_color_pct.BackColor = current_color;
-            if_inclusion = false;
-        }
-
-        private void pink_pct_Click(object sender, EventArgs e)
-        {
-            current_color = pink_pct.BackColor;
-            current_color_pct.BackColor = current_color;
-            if_inclusion = false;
-        }
-
-        private void orange_pct_Click(object sender, EventArgs e)
-        {
-            current_color = orange_pct.BackColor;
-            current_color_pct.BackColor = current_color;
-            if_inclusion = false;
-        }
-
-        private void black_pct_Click(object sender, EventArgs e)
-        {
-            current_color = gray_pct.BackColor;
-            current_color_pct.BackColor = current_color;
-            if_inclusion = false;
-        }
 
         private void main_pct_Click(object sender, EventArgs e)
         {
-
-            if (if_inclusion)
+            if (select_bt.BackColor == Color.Green)
             {
-                if (R.Value > 0)
+                Color pixel_color = bmp_now.GetPixel(MousePosition.X - this.Location.X - main_pct.Location.X - 4, MousePosition.Y - this.Location.Y - main_pct.Location.Y - 30);
+                if (selected_color_list.Contains(pixel_color.Name))
                 {
-                    Rectangle rect = new Rectangle(MousePosition.X - this.Location.X - main_pct.Location.X - 4, MousePosition.Y - this.Location.Y - main_pct.Location.Y - 30, Decimal.ToInt32(R.Value) * 2, Decimal.ToInt32(R.Value)*2);
-                    SolidBrush grayBrush = new SolidBrush(Color.Black);
-                    var gph_n = Graphics.FromImage(bmp_now);
-                    gph_n.FillEllipse(grayBrush, rect);
-                    main_pct.Image = bmp_now;
+                    selected_color_list.Remove(pixel_color.Name);
+                    selected_label.Text = "Selected grain count: " + selected_color_list.Count();
                 }
+                else
+                {
+                    selected_color_list.Add(pixel_color.Name);
+                    selected_label.Text = "Selected grain count: " + (selected_color_list.Count() - 2);
+                }
+               
+
 
             }
             else
             {
-                bmp_now.SetPixel(MousePosition.X - this.Location.X - main_pct.Location.X - 4, MousePosition.Y - this.Location.Y - main_pct.Location.Y - 30, current_color);
-                main_pct.Image = bmp_now;
-            }
+                if (if_inclusion)
+                {
+                    if (R.Value > 0)
+                    {
+                        Rectangle rect = new Rectangle(MousePosition.X - this.Location.X - main_pct.Location.X - 4, MousePosition.Y - this.Location.Y - main_pct.Location.Y - 30, Decimal.ToInt32(R.Value) * 2, Decimal.ToInt32(R.Value) * 2);
+                        SolidBrush grayBrush = new SolidBrush(Color.Black);
+                        var gph_n = Graphics.FromImage(bmp_now);
+                        gph_n.FillEllipse(grayBrush, rect);
+                        main_pct.Image = bmp_now;
+                    }
 
+                }
+                else
+                {
+                    Random rnd = new Random();
+                    Color random_color = Color.FromArgb(255, rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256));
+                    bmp_now.SetPixel(MousePosition.X - this.Location.X - main_pct.Location.X - 4, MousePosition.Y - this.Location.Y - main_pct.Location.Y - 30, random_color);
+                    current_color_pct.BackColor = random_color;
+                    main_pct.Image = bmp_now;
+                }
+            }
 
         }
 
@@ -402,16 +358,16 @@ namespace Cellar_Automata_Simulator
             var nbh4_y = y + 1;
             var inclusion_color = Color.Black;
 
-            if (nbh1_x > -1 && bitmapValues[nbh1_y][nbh1_x].Name != "0" && bitmapValues[nbh1_y][nbh1_x].Name != inclusion_color_name)
+            if (nbh1_x > -1 && bitmapValues[nbh1_y][nbh1_x].Name != "0" &&  selected_color_list.Contains(bitmapValues[nbh1_y][nbh1_x].Name)==false)
             { neighboors.Add(bitmapValues[nbh1_y][nbh1_x]); }
 
-            if (nbh2_x < width && bitmapValues[nbh2_y][nbh2_x].Name != "0" && bitmapValues[nbh2_y][nbh2_x].Name != inclusion_color_name)
+            if (nbh2_x < width && bitmapValues[nbh2_y][nbh2_x].Name != "0"  && selected_color_list.Contains(bitmapValues[nbh2_y][nbh2_x].Name) == false)
             { neighboors.Add(bitmapValues[nbh2_y][nbh2_x]); }
 
-            if (nbh3_y > -1 && bitmapValues[nbh3_y][nbh3_x].Name != "0" && bitmapValues[nbh3_y][nbh3_x].Name != inclusion_color_name)
+            if (nbh3_y > -1 && bitmapValues[nbh3_y][nbh3_x].Name != "0" && selected_color_list.Contains(bitmapValues[nbh3_y][nbh3_x].Name) == false)
             { neighboors.Add(bitmapValues[nbh3_y][nbh3_x]); }
 
-            if (nbh4_y < height && bitmapValues[nbh4_y][nbh4_x].Name != "0" && bitmapValues[nbh4_y][nbh4_x].Name != inclusion_color_name)
+            if (nbh4_y < height && bitmapValues[nbh4_y][nbh4_x].Name != "0" && selected_color_list.Contains(bitmapValues[nbh4_y][nbh4_x].Name) == false)
             { neighboors.Add(bitmapValues[nbh4_y][nbh4_x]); }
 
             if (neighboors.Count() == 0)
@@ -438,16 +394,16 @@ namespace Cellar_Automata_Simulator
             var nbh4_y = y + 1;
 
 
-            if (nbh1_x > -1 && nbh1_y > -1 && bitmapValues[nbh1_y][nbh1_x].Name != "0" && bitmapValues[nbh1_y][nbh1_x].Name != inclusion_color_name)
+            if (nbh1_x > -1 && nbh1_y > -1 && bitmapValues[nbh1_y][nbh1_x].Name != "0"  && selected_color_list.Contains(bitmapValues[nbh1_y][nbh1_x].Name) == false)
             { neighboors.Add(bitmapValues[nbh1_y][nbh1_x]); }
 
-            if (nbh2_x < width && nbh2_y > -1 && bitmapValues[nbh2_y][nbh2_x].Name != "0" && bitmapValues[nbh2_y][nbh2_x].Name != inclusion_color_name)
+            if (nbh2_x < width && nbh2_y > -1 && bitmapValues[nbh2_y][nbh2_x].Name != "0"  && selected_color_list.Contains(bitmapValues[nbh2_y][nbh2_x].Name) == false)
             { neighboors.Add(bitmapValues[nbh2_y][nbh2_x]); }
 
-            if (nbh3_x > -1 && nbh3_y < height && bitmapValues[nbh3_y][nbh3_x].Name != "0" && bitmapValues[nbh3_y][nbh3_x].Name != inclusion_color_name)
+            if (nbh3_x > -1 && nbh3_y < height && bitmapValues[nbh3_y][nbh3_x].Name != "0"  && selected_color_list.Contains(bitmapValues[nbh3_y][nbh3_x].Name) == false)
             { neighboors.Add(bitmapValues[nbh3_y][nbh3_x]); }
 
-            if (nbh4_x < width && nbh4_y < height && bitmapValues[nbh4_y][nbh4_x].Name != "0" && bitmapValues[nbh4_y][nbh4_x].Name != inclusion_color_name)
+            if (nbh4_x < width && nbh4_y < height && bitmapValues[nbh4_y][nbh4_x].Name != "0" && selected_color_list.Contains(bitmapValues[nbh4_y][nbh4_x].Name) == false)
             { neighboors.Add(bitmapValues[nbh4_y][nbh4_x]); }
 
             if (neighboors.Count() == 0)
@@ -478,22 +434,22 @@ namespace Cellar_Automata_Simulator
             var nbh6_x = x + 1;
             var nbh6_y = y + 1;
 
-            if (nbh1_x > -1 && bitmapValues[nbh1_y][nbh1_x].Name != "0" && bitmapValues[nbh1_y][nbh1_x].Name != inclusion_color_name)
+            if (nbh1_x > -1 && bitmapValues[nbh1_y][nbh1_x].Name != "0"  && selected_color_list.Contains(bitmapValues[nbh1_y][nbh1_x].Name) == false)
             { neighboors.Add(bitmapValues[nbh1_y][nbh1_x]); }
 
-            if (nbh2_x < width && bitmapValues[nbh2_y][nbh2_x].Name != "0" && bitmapValues[nbh2_y][nbh2_x].Name != inclusion_color_name)
+            if (nbh2_x < width && bitmapValues[nbh2_y][nbh2_x].Name != "0" && selected_color_list.Contains(bitmapValues[nbh2_y][nbh2_x].Name) == false)
             { neighboors.Add(bitmapValues[nbh2_y][nbh2_x]); }
 
-            if (nbh3_y > -1 && bitmapValues[nbh3_y][nbh3_x].Name != "0" && bitmapValues[nbh3_y][nbh3_x].Name != inclusion_color_name)
+            if (nbh3_y > -1 && bitmapValues[nbh3_y][nbh3_x].Name != "0"  && selected_color_list.Contains(bitmapValues[nbh3_y][nbh3_x].Name) == false)
             { neighboors.Add(bitmapValues[nbh3_y][nbh3_x]); }
 
-            if (nbh4_y < height && bitmapValues[nbh4_y][nbh4_x].Name != "0" && bitmapValues[nbh4_y][nbh4_x].Name != inclusion_color_name)
+            if (nbh4_y < height && bitmapValues[nbh4_y][nbh4_x].Name != "0" && selected_color_list.Contains(bitmapValues[nbh4_y][nbh4_x].Name) == false)
             { neighboors.Add(bitmapValues[nbh4_y][nbh4_x]); }
 
-            if (nbh5_x > -1 && nbh5_y > -1 && bitmapValues[nbh5_y][nbh5_x].Name != "0" && bitmapValues[nbh5_y][nbh5_x].Name != inclusion_color_name)
+            if (nbh5_x > -1 && nbh5_y > -1 && bitmapValues[nbh5_y][nbh5_x].Name != "0" && selected_color_list.Contains(bitmapValues[nbh5_y][nbh5_x].Name) == false)
             { neighboors.Add(bitmapValues[nbh5_y][nbh5_x]); }
 
-            if (nbh6_x < width && nbh6_y < height && bitmapValues[nbh6_y][nbh6_x].Name != "0" && bitmapValues[nbh6_y][nbh6_x].Name != inclusion_color_name)
+            if (nbh6_x < width && nbh6_y < height && bitmapValues[nbh6_y][nbh6_x].Name != "0" && selected_color_list.Contains(bitmapValues[nbh6_y][nbh6_x].Name) == false)
             { neighboors.Add(bitmapValues[nbh6_y][nbh6_x]); }
 
             if (neighboors.Count() == 0)
@@ -525,22 +481,22 @@ namespace Cellar_Automata_Simulator
             var nbh6_y = y + 1;
 
 
-            if (nbh1_x > -1 && bitmapValues[nbh1_y][nbh1_x].Name != "0" && bitmapValues[nbh1_y][nbh1_x].Name != inclusion_color_name)
+            if (nbh1_x > -1 && bitmapValues[nbh1_y][nbh1_x].Name != "0" && selected_color_list.Contains(bitmapValues[nbh1_y][nbh1_x].Name) == false)
             { neighboors.Add(bitmapValues[nbh1_y][nbh1_x]); }
 
-            if (nbh2_x < width && bitmapValues[nbh2_y][nbh2_x].Name != "0" && bitmapValues[nbh2_y][nbh2_x].Name != inclusion_color_name)
+            if (nbh2_x < width && bitmapValues[nbh2_y][nbh2_x].Name != "0"  && selected_color_list.Contains(bitmapValues[nbh2_y][nbh2_x].Name) == false)
             { neighboors.Add(bitmapValues[nbh2_y][nbh2_x]); }
 
-            if (nbh3_y > -1 && bitmapValues[nbh3_y][nbh3_x].Name != "0" && bitmapValues[nbh3_y][nbh3_x].Name != inclusion_color_name)
+            if (nbh3_y > -1 && bitmapValues[nbh3_y][nbh3_x].Name != "0" && selected_color_list.Contains(bitmapValues[nbh3_y][nbh3_x].Name) == false)
             { neighboors.Add(bitmapValues[nbh3_y][nbh3_x]); }
 
-            if (nbh4_y < height && bitmapValues[nbh4_y][nbh4_x].Name != "0" && bitmapValues[nbh4_y][nbh4_x].Name != inclusion_color_name)
+            if (nbh4_y < height && bitmapValues[nbh4_y][nbh4_x].Name != "0" && selected_color_list.Contains(bitmapValues[nbh4_y][nbh4_x].Name) == false)
             { neighboors.Add(bitmapValues[nbh4_y][nbh4_x]); }
 
-            if (nbh5_x < width && nbh5_y > -1 && bitmapValues[nbh5_y][nbh5_x].Name != "0" && bitmapValues[nbh5_y][nbh5_x].Name != inclusion_color_name)
+            if (nbh5_x < width && nbh5_y > -1 && bitmapValues[nbh5_y][nbh5_x].Name != "0" && selected_color_list.Contains(bitmapValues[nbh5_y][nbh5_x].Name) == false)
             { neighboors.Add(bitmapValues[nbh5_y][nbh5_x]); }
 
-            if (nbh6_x > -1 && nbh6_y < height && bitmapValues[nbh6_y][nbh6_x].Name != "0" && bitmapValues[nbh6_y][nbh6_x].Name != inclusion_color_name)
+            if (nbh6_x > -1 && nbh6_y < height && bitmapValues[nbh6_y][nbh6_x].Name != "0" && selected_color_list.Contains(bitmapValues[nbh6_y][nbh6_x].Name) == false)
             { neighboors.Add(bitmapValues[nbh6_y][nbh6_x]); }
 
             if (neighboors.Count() == 0)
@@ -571,21 +527,21 @@ namespace Cellar_Automata_Simulator
             var nbh5_y = y + 1;
 
 
-            if (nbh1_x > -1 && bitmapValues[nbh1_y][nbh1_x].Name != "0" && bitmapValues[nbh1_y][nbh1_x].Name != inclusion_color_name)
+            if (nbh1_x > -1 && bitmapValues[nbh1_y][nbh1_x].Name != "0"  && selected_color_list.Contains(bitmapValues[nbh1_y][nbh1_x].Name) == false)
             { neighboors.Add(bitmapValues[nbh1_y][nbh1_x]); }
 
-            if (nbh2_x > -1 && nbh2_y > -1 && nbh2_y > -1 && bitmapValues[nbh2_y][nbh2_x].Name != "0" && bitmapValues[nbh2_y][nbh2_x].Name != inclusion_color_name)
+            if (nbh2_x > -1 && nbh2_y > -1 && nbh2_y > -1 && bitmapValues[nbh2_y][nbh2_x].Name != "0"  && selected_color_list.Contains(bitmapValues[nbh2_y][nbh2_x].Name) == false)
             { neighboors.Add(bitmapValues[nbh2_y][nbh2_x]); }
 
 
-            if (nbh3_y > -1 && bitmapValues[nbh3_y][nbh3_x].Name != "0" && bitmapValues[nbh3_y][nbh3_x].Name != inclusion_color_name)
+            if (nbh3_y > -1 && bitmapValues[nbh3_y][nbh3_x].Name != "0" && selected_color_list.Contains(bitmapValues[nbh3_y][nbh3_x].Name) == false)
             { neighboors.Add(bitmapValues[nbh3_y][nbh3_x]); }
             
 
-            if (nbh4_y < height && bitmapValues[nbh4_y][nbh4_x].Name != "0" && bitmapValues[nbh4_y][nbh4_x].Name != inclusion_color_name)
+            if (nbh4_y < height && bitmapValues[nbh4_y][nbh4_x].Name != "0" && selected_color_list.Contains(bitmapValues[nbh4_y][nbh4_x].Name) == false)
             { neighboors.Add(bitmapValues[nbh4_y][nbh4_x]); }
 
-            if (nbh5_x > -1 && nbh5_y < height && bitmapValues[nbh5_y][nbh5_x].Name != "0" && bitmapValues[nbh5_y][nbh5_x].Name != inclusion_color_name)
+            if (nbh5_x > -1 && nbh5_y < height && bitmapValues[nbh5_y][nbh5_x].Name != "0" && selected_color_list.Contains(bitmapValues[nbh5_y][nbh5_x].Name) == false)
             { neighboors.Add(bitmapValues[nbh5_y][nbh5_x]); }
 
             if (neighboors.Count() == 0)
@@ -615,19 +571,19 @@ namespace Cellar_Automata_Simulator
             var nbh5_y = y + 1;
 
 
-            if (nbh1_x < width && nbh1_y > -1 && bitmapValues[nbh1_y][nbh1_x].Name != "0" && bitmapValues[nbh1_y][nbh1_x].Name != inclusion_color_name)
+            if (nbh1_x < width && nbh1_y > -1 && bitmapValues[nbh1_y][nbh1_x].Name != "0"  && selected_color_list.Contains(bitmapValues[nbh1_y][nbh1_x].Name) == false)
             { neighboors.Add(bitmapValues[nbh1_y][nbh1_x]); }
 
-            if (nbh2_x < width && nbh2_y > -1 && bitmapValues[nbh2_y][nbh2_x].Name != "0" && bitmapValues[nbh2_y][nbh2_x].Name != inclusion_color_name)
+            if (nbh2_x < width && nbh2_y > -1 && bitmapValues[nbh2_y][nbh2_x].Name != "0"  && selected_color_list.Contains(bitmapValues[nbh2_y][nbh2_x].Name) == false)
             { neighboors.Add(bitmapValues[nbh2_y][nbh2_x]); }
 
-            if (nbh3_y > -1 && bitmapValues[nbh3_y][nbh3_x].Name != "0" && bitmapValues[nbh3_y][nbh3_x].Name != inclusion_color_name)
+            if (nbh3_y > -1 && bitmapValues[nbh3_y][nbh3_x].Name != "0" &&  selected_color_list.Contains(bitmapValues[nbh3_y][nbh3_x].Name) == false)
             { neighboors.Add(bitmapValues[nbh3_y][nbh3_x]); }
 
-            if (nbh4_y < height && bitmapValues[nbh4_y][nbh4_x].Name != "0" && bitmapValues[nbh4_y][nbh4_x].Name != inclusion_color_name)
+            if (nbh4_y < height && bitmapValues[nbh4_y][nbh4_x].Name != "0" && selected_color_list.Contains(bitmapValues[nbh4_y][nbh4_x].Name) == false)
             { neighboors.Add(bitmapValues[nbh4_y][nbh4_x]); }
 
-            if (nbh5_x < width && nbh5_y < height && bitmapValues[nbh5_y][nbh5_x].Name != "0" && bitmapValues[nbh5_y][nbh5_x].Name != inclusion_color_name)
+            if (nbh5_x < width && nbh5_y < height && bitmapValues[nbh5_y][nbh5_x].Name != "0" &&  selected_color_list.Contains(bitmapValues[nbh5_y][nbh5_x].Name) == false)
             { neighboors.Add(bitmapValues[nbh5_y][nbh5_x]); }
 
             if (neighboors.Count() == 0)
@@ -644,28 +600,28 @@ namespace Cellar_Automata_Simulator
         private Color Rule_1(int x, int y, List<List<Color>> bitmapValues)
         {
             List<Color> moor_neighboors = new List<Color>();
-            if (y - 1 > -1 && bitmapValues[y - 1][x].Name != "0" && bitmapValues[y - 1][x].Name != inclusion_color_name)
+            if (y - 1 > -1 && bitmapValues[y - 1][x].Name != "0" &&  selected_color_list.Contains(bitmapValues[y - 1][x].Name) == false)
             { moor_neighboors.Add(bitmapValues[y - 1][x]); }
 
-            if (y + 1 < height && bitmapValues[y + 1][x].Name != "0" && bitmapValues[y + 1][x].Name != inclusion_color_name)
+            if (y + 1 < height && bitmapValues[y + 1][x].Name != "0"  && selected_color_list.Contains(bitmapValues[y + 1][x].Name) == false)
             { moor_neighboors.Add(bitmapValues[y + 1][x]); }
 
-            if (x - 1 > -1 && bitmapValues[y][x - 1].Name != "0" && bitmapValues[y][x - 1].Name != inclusion_color_name)
+            if (x - 1 > -1 && bitmapValues[y][x - 1].Name != "0" && selected_color_list.Contains(bitmapValues[y][x - 1].Name) == false)
             { moor_neighboors.Add(bitmapValues[y][x - 1]); }
 
-            if (x + 1 < width && bitmapValues[y][x + 1].Name != "0" && bitmapValues[y][x + 1].Name != inclusion_color_name)
+            if (x + 1 < width && bitmapValues[y][x + 1].Name != "0" &&  selected_color_list.Contains(bitmapValues[y][x+1].Name) == false)
             { moor_neighboors.Add(bitmapValues[y][x + 1]); }
 
-            if (x - 1 > -1 && y - 1 > -1 && bitmapValues[y - 1][x - 1].Name != "0" && bitmapValues[y - 1][x - 1].Name != inclusion_color_name)
+            if (x - 1 > -1 && y - 1 > -1 && bitmapValues[y - 1][x - 1].Name != "0" && selected_color_list.Contains(bitmapValues[y - 1][x-1].Name) == false)
             { moor_neighboors.Add(bitmapValues[y - 1][x - 1]); }
 
-            if (y - 1 > -1 && x + 1 < width && bitmapValues[y - 1][x + 1].Name != "0" && bitmapValues[y - 1][x + 1].Name != inclusion_color_name)
+            if (y - 1 > -1 && x + 1 < width && bitmapValues[y - 1][x + 1].Name != "0" && selected_color_list.Contains(bitmapValues[y - 1][x+1].Name) == false)
             { moor_neighboors.Add(bitmapValues[y - 1][x + 1]); }
 
-            if (x - 1 > -1 && y + 1 < height && bitmapValues[y + 1][x - 1].Name != "0" && bitmapValues[y + 1][x - 1].Name != inclusion_color_name)
+            if (x - 1 > -1 && y + 1 < height && bitmapValues[y + 1][x - 1].Name != "0" && selected_color_list.Contains(bitmapValues[y + 1][x-1].Name) == false)
             { moor_neighboors.Add(bitmapValues[y + 1][x - 1]); }
 
-            if (x + 1 < width && y + 1 < height && bitmapValues[y + 1][x + 1].Name != "0" && bitmapValues[y + 1][x + 1].Name != inclusion_color_name)
+            if (x + 1 < width && y + 1 < height && bitmapValues[y + 1][x + 1].Name != "0" && selected_color_list.Contains(bitmapValues[y + 1][x+1].Name) == false)
             { moor_neighboors.Add(bitmapValues[y + 1][x + 1]); }
 
             if (moor_neighboors.Count() == 0)
@@ -691,16 +647,16 @@ namespace Cellar_Automata_Simulator
         private Color Rule_2(int x, int y, List<List<Color>> bitmapValues)
         {
             List<Color> moor_neighboors = new List<Color>();
-            if (y - 1 > -1 && bitmapValues[y - 1][x].Name != "0" && bitmapValues[y - 1][x].Name != inclusion_color_name)
+            if (y - 1 > -1 && bitmapValues[y - 1][x].Name != "0" && selected_color_list.Contains(bitmapValues[y - 1][x].Name) == false)
             { moor_neighboors.Add(bitmapValues[y - 1][x]); }
 
-            if (y + 1 < height && bitmapValues[y + 1][x].Name != "0" && bitmapValues[y + 1][x].Name != inclusion_color_name)
+            if (y + 1 < height && bitmapValues[y + 1][x].Name != "0" && selected_color_list.Contains(bitmapValues[y + 1][x].Name) == false)
             { moor_neighboors.Add(bitmapValues[y + 1][x]); }
 
-            if (x - 1 > -1 && bitmapValues[y][x - 1].Name != "0" && bitmapValues[y][x - 1].Name != inclusion_color_name)
+            if (x - 1 > -1 && bitmapValues[y][x - 1].Name != "0" && selected_color_list.Contains(bitmapValues[y][x -1].Name) == false)
             { moor_neighboors.Add(bitmapValues[y][x - 1]); }
 
-            if (x + 1 < width && bitmapValues[y][x + 1].Name != "0" && bitmapValues[y][x + 1].Name != inclusion_color_name)
+            if (x + 1 < width && bitmapValues[y][x + 1].Name != "0" && selected_color_list.Contains(bitmapValues[y][x + 1].Name) == false)
             { moor_neighboors.Add(bitmapValues[y][x + 1]); }
 
             if (moor_neighboors.Count() == 0)
@@ -728,16 +684,16 @@ namespace Cellar_Automata_Simulator
             List<Color> moor_neighboors = new List<Color>();
 
 
-            if (x - 1 > -1 && y - 1 > -1 && bitmapValues[y - 1][x - 1].Name != "0" && bitmapValues[y - 1][x - 1].Name != inclusion_color_name)
+            if (x - 1 > -1 && y - 1 > -1 && bitmapValues[y - 1][x - 1].Name != "0" &&  selected_color_list.Contains(bitmapValues[y - 1][x - 1].Name) == false)
             { moor_neighboors.Add(bitmapValues[y - 1][x - 1]); }
 
-            if (y - 1 > -1 && x + 1 < width && bitmapValues[y - 1][x + 1].Name != "0" && bitmapValues[y - 1][x + 1].Name != inclusion_color_name)
+            if (y - 1 > -1 && x + 1 < width && bitmapValues[y - 1][x + 1].Name != "0" &&  selected_color_list.Contains(bitmapValues[y - 1][x + 1].Name) == false)
             { moor_neighboors.Add(bitmapValues[y - 1][x + 1]); }
 
-            if (x - 1 > -1 && y + 1 < height && bitmapValues[y + 1][x - 1].Name != "0" && bitmapValues[y + 1][x - 1].Name != inclusion_color_name)
+            if (x - 1 > -1 && y + 1 < height && bitmapValues[y + 1][x - 1].Name != "0" &&  selected_color_list.Contains(bitmapValues[y + 1][x - 1].Name) == false)
             { moor_neighboors.Add(bitmapValues[y + 1][x - 1]); }
 
-            if (x + 1 < width && y + 1 < height && bitmapValues[y + 1][x + 1].Name != "0" && bitmapValues[y + 1][x + 1].Name != inclusion_color_name)
+            if (x + 1 < width && y + 1 < height && bitmapValues[y + 1][x + 1].Name != "0" && selected_color_list.Contains(bitmapValues[y + 1][x + 1].Name) == false)
             { moor_neighboors.Add(bitmapValues[y + 1][x + 1]); }
 
 
@@ -770,28 +726,28 @@ namespace Cellar_Automata_Simulator
             if(random<= xPropability.Value)
             { 
                 List<Color> moor_neighboors = new List<Color>();
-                if (y - 1 > -1 && bitmapValues[y - 1][x].Name != "0" && bitmapValues[y - 1][x].Name != inclusion_color_name)
+                if (y - 1 > -1 && bitmapValues[y - 1][x].Name != "0" && selected_color_list.Contains(bitmapValues[y - 1][x].Name) == false)
                 { moor_neighboors.Add(bitmapValues[y - 1][x]); }
 
-                if (y + 1 < height && bitmapValues[y + 1][x].Name != "0" && bitmapValues[y + 1][x].Name != inclusion_color_name)
+                if (y + 1 < height && bitmapValues[y + 1][x].Name != "0" && selected_color_list.Contains(bitmapValues[y + 1][x].Name) == false)
                 { moor_neighboors.Add(bitmapValues[y + 1][x]); }
 
-                if (x - 1 > -1 && bitmapValues[y][x - 1].Name != "0" && bitmapValues[y][x - 1].Name != inclusion_color_name)
+                if (x - 1 > -1 && bitmapValues[y][x - 1].Name != "0" && selected_color_list.Contains(bitmapValues[y][x - 1].Name) == false)
                 { moor_neighboors.Add(bitmapValues[y][x - 1]); }
 
-                if (x + 1 < width && bitmapValues[y][x + 1].Name != "0" && bitmapValues[y][x + 1].Name != inclusion_color_name)
+                if (x + 1 < width && bitmapValues[y][x + 1].Name != "0" && selected_color_list.Contains(bitmapValues[y][x + 1].Name) == false)
                 { moor_neighboors.Add(bitmapValues[y][x + 1]); }
 
-                if (x - 1 > -1 && y - 1 > -1 && bitmapValues[y - 1][x - 1].Name != "0" && bitmapValues[y - 1][x - 1].Name != inclusion_color_name)
+                if (x - 1 > -1 && y - 1 > -1 && bitmapValues[y - 1][x - 1].Name != "0" && selected_color_list.Contains(bitmapValues[y - 1][x - 1].Name) == false)
                 { moor_neighboors.Add(bitmapValues[y - 1][x - 1]); }
 
-                if (y - 1 > -1 && x + 1 < width && bitmapValues[y - 1][x + 1].Name != "0" && bitmapValues[y - 1][x + 1].Name != inclusion_color_name)
+                if (y - 1 > -1 && x + 1 < width && bitmapValues[y - 1][x + 1].Name != "0"  && selected_color_list.Contains(bitmapValues[y - 1][x + 1].Name) == false)
                 { moor_neighboors.Add(bitmapValues[y - 1][x + 1]); }
 
-                if (x - 1 > -1 && y + 1 < height && bitmapValues[y + 1][x - 1].Name != "0" && bitmapValues[y + 1][x - 1].Name != inclusion_color_name)
+                if (x - 1 > -1 && y + 1 < height && bitmapValues[y + 1][x - 1].Name != "0"  && selected_color_list.Contains(bitmapValues[y + 1][x - 1].Name) == false)
                 { moor_neighboors.Add(bitmapValues[y + 1][x - 1]); }
 
-                if (x + 1 < width && y + 1 < height && bitmapValues[y + 1][x + 1].Name != "0" && bitmapValues[y + 1][x + 1].Name != inclusion_color_name)
+                if (x + 1 < width && y + 1 < height && bitmapValues[y + 1][x + 1].Name != "0" && selected_color_list.Contains(bitmapValues[y + 1][x + 1].Name) == false)
                 { moor_neighboors.Add(bitmapValues[y + 1][x + 1]); }
 
                 if (moor_neighboors.Count() == 0)
@@ -871,8 +827,6 @@ namespace Cellar_Automata_Simulator
         private void clr_bt_Click(object sender, EventArgs e)
         {
             step = true;
-            //Image img = main_pct.Image;
-            //img?.Dispose();
             bmp_now = new Bitmap(1000, 1000);
             main_pct.Image = bmp_now;
         }
@@ -948,20 +902,33 @@ namespace Cellar_Automata_Simulator
 
         private void button3_Click(object sender, EventArgs e)
         {
+            Boolean seedswhileflag = true;
+            int seed_counter = 0;
             Random rnd = new Random();
-            for(int i=0; i<seedsCount.Value+1;i++)
+
+            while(seedswhileflag)
             { 
             int random_x = rnd.Next(0, main_pct.Width);
             int random_y = rnd.Next(0, main_pct.Height);
             Color random_color = Color.FromArgb(255, rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256));
-                bmp_now.SetPixel(random_x, random_y, random_color);
+
+                if (bmp_now.GetPixel(random_x, random_y).Name == "0")
+                {
+                    bmp_now.SetPixel(random_x, random_y, random_color);
+                    seed_counter += 1;
+                }
+
+                if(seed_counter>seedsCount.Value)
+                {
+                    seedswhileflag = false;
+                }
             }
             main_pct.Image = bmp_now;
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < inclusionsCount.Value+1; i++)
+            for (int i = 0; i < inclusionsCount.Value; i++)
             {
                 Random rnd = new Random();
                 int random_x = rnd.Next(0, main_pct.Width);
@@ -1007,5 +974,60 @@ namespace Cellar_Automata_Simulator
                 main_pct.Size = new System.Drawing.Size(main_pct.Width, height);
             }
         }
+
+        private void select_bt_Click(object sender, EventArgs e)
+        {
+            if(select_bt.BackColor == Color.Green)
+            {
+                select_bt.BackColor = Color.White;
+            }
+            else
+            {
+                select_bt.BackColor = Color.Green;
+                phase_bt.BackColor = Color.White;
+            }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            selected_color_list.Clear();
+            selected_color_list.Add(inclusion_color_name);
+            selected_color_list.Add(phase_color_name);
+
+            selected_label.Text = "Selected grain count: " + (selected_color_list.Count() - 2);
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            for(int x=0;x<width;x++)
+            {
+                for(int y=0;y<height;y++)
+                {
+                    if (bmp_now.GetPixel(x, y).Name!="0" && selected_color_list.Contains(bmp_now.GetPixel(x, y).Name) ==false)
+                    {
+                        bmp_now.SetPixel(x, y, Color.FromName("0"));
+                    }
+
+                }
+            }
+            main_pct.Image = bmp_now;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    if (bmp_now.GetPixel(x, y).Name!="0" && bmp_now.GetPixel(x, y).Name != inclusion_color_name)
+                    {
+                        bmp_now.SetPixel(x, y, phase_color);
+                    }
+
+                }
+            }
+            main_pct.Image = bmp_now;
+        }
     }
-}
+  }
+

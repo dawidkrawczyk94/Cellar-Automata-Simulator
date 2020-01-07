@@ -28,6 +28,11 @@ namespace Cellar_Automata_Simulator
         private Color phase_color = Color.DeepPink;
         private bool GBC = false;
         private List<string> selected_color_list = new List<string>();
+        private List<List<bool>> IsOnBoundary_list = new List<List<bool>>();
+        private Bitmap temp_bmp = new Bitmap(1000, 1000);
+        private int BoundaryLenght = 0;
+        private List<Color> GrainIdList = new List<Color>();
+
         public Form1()
         {
             InitializeComponent();
@@ -71,7 +76,10 @@ namespace Cellar_Automata_Simulator
             phopt_cbox.Text = "random";
             selected_color_list.Add(inclusion_color_name);
             selected_color_list.Add(phase_color_name);
-            selected_label.Text = "Selected grain count: " + (selected_color_list.Count() - 2);
+            selected_label.Text = "Selected grain list count: " + (selected_color_list.Count() - 2);
+            phase_bt.BackColor = phase_color;
+            lenght_lab.Text = "";
+            mean_size_lab.Text = "";
 
         }
 
@@ -102,12 +110,12 @@ namespace Cellar_Automata_Simulator
                 if (selected_color_list.Contains(pixel_color.Name))
                 {
                     selected_color_list.Remove(pixel_color.Name);
-                    selected_label.Text = "Selected grain count: " + selected_color_list.Count();
+                    selected_label.Text = "Selected grain list count: " + selected_color_list.Count();
                 }
                 else
                 {
                     selected_color_list.Add(pixel_color.Name);
-                    selected_label.Text = "Selected grain count: " + (selected_color_list.Count() - 2);
+                    selected_label.Text = "Selected grain list count: " + (selected_color_list.Count() - 2);
                 }
                
 
@@ -183,12 +191,11 @@ namespace Cellar_Automata_Simulator
         private void MyMethodAsync(List<List<Color>> bitmapValues, string NeighboorOpt, string PH_Opt)
         {
 
-
             whileFlag = true;
-
             while (whileFlag)
             {
                 List<List<Color>> bitmapValuesNext = new List<List<Color>>();
+
                 for (int y = 0; y < height; y++)
                 {
                     var xValuesListNext = new List<Color>();
@@ -323,7 +330,7 @@ namespace Cellar_Automata_Simulator
                     bitmapValuesNext.Add(xValuesListNext);
                 }
 
-
+                
 
                 Image img = main_pct.Image;
                 bmp_now = CreateBitmapFromListValues(bitmapValuesNext);
@@ -331,8 +338,11 @@ namespace Cellar_Automata_Simulator
                 main_pct.Image = bmp_now;
                 img?.Dispose();
 
+                BoundaryLenght = 0;
+                IsOnBoundary_list.Clear();
+                IsOnBoundary_list = boundaries_detection(bitmapValuesNext);
 
-                if(step)
+                if (step)
                 {
                     whileFlag = false;
                 }
@@ -341,10 +351,104 @@ namespace Cellar_Automata_Simulator
                 {
                  whileFlag = bitmapValues.Any(a => a.Any(value => value.Name == "0"));
                 } 
+
             }
+ 
         }
 
+        private List<List<bool>> boundaries_detection(List<List<Color>> bitmapValues)
+        {
+            List<List<bool>> boollist = new List<List<bool>>();
+            GrainIdList.Clear();
+            for (int i = 0; i<height; i++)
+            {
+                List<bool> BoundariesRow = new List<bool>();
+                for (int j = 0; j<width; j++)
+                {
+                    if (GrainIdList.Any(value => value == bitmapValues[i][j]))
+                    {}
+                    else
+                    {
+                        GrainIdList.Add(bitmapValues[i][j]);
+                    }
 
+                    if (i > 0 && i<height-1 && j> 0 && j<width-1)
+                    {
+                        if(bitmapValues[i][j]!= bitmapValues[i][j - 1])
+                        {
+                            BoundariesRow.Add(true);
+                            BoundaryLenght += 1;
+                        }
+                        else
+                        {
+                            if (bitmapValues[i][j] != bitmapValues[i][j + 1])
+                            {
+                                BoundariesRow.Add(true);
+                                BoundaryLenght += 1;
+                            }
+                            else
+                            {
+                                if (bitmapValues[i][j] != bitmapValues[i - 1][j])
+                                {
+                                    BoundariesRow.Add(true);
+                                    BoundaryLenght += 1;
+                                }
+                                else
+                                {
+                                    if (bitmapValues[i][j] != bitmapValues[i + 1][j])
+                                    {
+                                        BoundariesRow.Add(true);
+                                        BoundaryLenght += 1;
+                                    }
+                                    else
+                                    {
+                                        if (bitmapValues[i][j] != bitmapValues[i - 1][j - 1])
+                                        {
+                                            BoundariesRow.Add(true);
+                                            BoundaryLenght += 1;
+                                        }
+                                        else
+                                        {
+                                            if (bitmapValues[i][j] != bitmapValues[i - 1][j + 1])
+                                            {
+                                                BoundariesRow.Add(true);
+                                                BoundaryLenght += 1;
+                                            }
+                                            else
+                                            {
+                                                if (bitmapValues[i][j] != bitmapValues[i + 1][j - 1])
+                                                {
+                                                    BoundariesRow.Add(true);
+                                                    BoundaryLenght += 1;
+                                                }
+                                                else
+                                                {
+                                                    if (bitmapValues[i][j] != bitmapValues[i + 1][j + 1])
+                                                    {
+                                                        BoundariesRow.Add(true);
+                                                        BoundaryLenght += 1;
+                                                    }
+                                                    else
+                                                    {
+                                                        BoundariesRow.Add(false);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        BoundariesRow.Add(false);
+                    }
+                }
+                boollist.Add(BoundariesRow);
+            }
+            return boollist;
+        }
         private Color neumann_function(int x, int y, List<List<Color>> bitmapValues)
         {
             List<Color> neighboors = new List<Color>();
@@ -788,7 +892,7 @@ namespace Cellar_Automata_Simulator
 
         private Bitmap CreateBitmapFromListValues(List<List<Color>> bitmapValues)
         {
-
+            
             if (!bitmapValues.Any())
             {
                 return null;
@@ -803,7 +907,6 @@ namespace Cellar_Automata_Simulator
                 {
                     bmp_next_step.SetPixel(j, i, bitmapValues[i][j]);
                 }
-
             }
 
             return bmp_next_step;
@@ -812,7 +915,8 @@ namespace Cellar_Automata_Simulator
 
         private async void start_bt_Click(object sender, EventArgs e)
         {
-
+            lenght_lab.Text = "Total boundary lenght is 0";
+            mean_size_lab.Text = "Mean grain size is 0";
             step = false;
             width = main_pct.Width;
             height = main_pct.Height;
@@ -822,6 +926,11 @@ namespace Cellar_Automata_Simulator
 
 
             await Task.Run(() => MyMethodAsync(bitmapValues, NeighboorOpt, PH_Opt));
+            lenght_lab.Text = "Total boundary lenght is " + (BoundaryLenght / 2);
+            if (GrainIdList.Count() > 0)
+            {
+                mean_size_lab.Text = "Mean grain size is " + ((height * width) / GrainIdList.Count());
+            }
         }
 
         private void clr_bt_Click(object sender, EventArgs e)
@@ -829,6 +938,8 @@ namespace Cellar_Automata_Simulator
             step = true;
             bmp_now = new Bitmap(1000, 1000);
             main_pct.Image = bmp_now;
+            lenght_lab.Text = "Total boundary lenght is 0";
+            mean_size_lab.Text = "Mean grain size is 0";
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -869,6 +980,7 @@ namespace Cellar_Automata_Simulator
 
             string path = "C:\\Cellar Automata\\" + localDate + ".png";
             bmp_now.Save(path);
+
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -896,8 +1008,19 @@ namespace Cellar_Automata_Simulator
                 }
             }
             if (filePath != "")
-            { bmp_now = new Bitmap(filePath); }
-            main_pct.Image = bmp_now;
+            {
+                bmp_now = new Bitmap(filePath);
+                BoundaryLenght = 0;
+                IsOnBoundary_list.Clear();
+                IsOnBoundary_list = boundaries_detection(GetBitmapValues(bmp_now));
+                main_pct.Image = bmp_now;
+                lenght_lab.Text = "Total boundary lenght is " + (BoundaryLenght / 2);
+
+                if (GrainIdList.Count() > 0)
+                {
+                    mean_size_lab.Text = "Mean grain size is " + ((height * width) / GrainIdList.Count());
+                }
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -918,7 +1041,7 @@ namespace Cellar_Automata_Simulator
                     seed_counter += 1;
                 }
 
-                if(seed_counter>seedsCount.Value)
+                if(seed_counter>seedsCount.Value-1)
                 {
                     seedswhileflag = false;
                 }
@@ -984,7 +1107,6 @@ namespace Cellar_Automata_Simulator
             else
             {
                 select_bt.BackColor = Color.Green;
-                phase_bt.BackColor = Color.White;
             }
         }
 
@@ -994,7 +1116,7 @@ namespace Cellar_Automata_Simulator
             selected_color_list.Add(inclusion_color_name);
             selected_color_list.Add(phase_color_name);
 
-            selected_label.Text = "Selected grain count: " + (selected_color_list.Count() - 2);
+            selected_label.Text = "Selected grain list count: " + (selected_color_list.Count() - 2);
         }
 
         private void button7_Click(object sender, EventArgs e)
@@ -1023,10 +1145,28 @@ namespace Cellar_Automata_Simulator
                     {
                         bmp_now.SetPixel(x, y, phase_color);
                     }
-
                 }
             }
             main_pct.Image = bmp_now;
+        }
+
+        private void mark_bdr_bt_Click(object sender, EventArgs e)
+        {
+
+                temp_bmp = bmp_now;
+                for (int i = 0; i < height; i++)
+                {
+                    for (int j = 0; j < width; j++)
+                    {
+                        if (IsOnBoundary_list[i][j])
+                        {
+                            bmp_now.SetPixel(j, i, Color.Black);
+                        }
+                    }
+                }
+                main_pct.Image = bmp_now;
+            
+            
         }
     }
   }

@@ -71,6 +71,10 @@
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.phase_bt = new System.Windows.Forms.Button();
+            this.label16 = new System.Windows.Forms.Label();
+            this.lenght_lab = new System.Windows.Forms.Label();
+            this.mark_bdr_bt = new System.Windows.Forms.Button();
+            this.mean_size_lab = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.main_pct)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.current_color_pct)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.inclusion_pct)).BeginInit();
@@ -534,11 +538,50 @@
             this.phase_bt.UseVisualStyleBackColor = false;
             this.phase_bt.Click += new System.EventHandler(this.button5_Click);
             // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(860, 391);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(46, 15);
+            this.label16.TabIndex = 0;
+            this.label16.Text = "Min. r=";
+            this.label16.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // lenght_lab
+            // 
+            this.lenght_lab.AutoSize = true;
+            this.lenght_lab.Location = new System.Drawing.Point(612, 272);
+            this.lenght_lab.Name = "lenght_lab";
+            this.lenght_lab.Size = new System.Drawing.Size(44, 15);
+            this.lenght_lab.TabIndex = 23;
+            this.lenght_lab.Text = "label16";
+            // 
+            // mark_bdr_bt
+            // 
+            this.mark_bdr_bt.Location = new System.Drawing.Point(612, 310);
+            this.mark_bdr_bt.Name = "mark_bdr_bt";
+            this.mark_bdr_bt.Size = new System.Drawing.Size(123, 23);
+            this.mark_bdr_bt.TabIndex = 27;
+            this.mark_bdr_bt.Text = "Mark boundaries";
+            this.mark_bdr_bt.UseVisualStyleBackColor = true;
+            this.mark_bdr_bt.Click += new System.EventHandler(this.mark_bdr_bt_Click);
+            // 
+            // mean_size_lab
+            // 
+            this.mean_size_lab.AutoSize = true;
+            this.mean_size_lab.Location = new System.Drawing.Point(612, 292);
+            this.mean_size_lab.Name = "mean_size_lab";
+            this.mean_size_lab.Size = new System.Drawing.Size(44, 15);
+            this.mean_size_lab.TabIndex = 23;
+            this.mean_size_lab.Text = "label16";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1114, 614);
+            this.Controls.Add(this.mark_bdr_bt);
             this.Controls.Add(this.phase_bt);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
@@ -581,6 +624,9 @@
             this.Controls.Add(this.maxR);
             this.Controls.Add(this.minR);
             this.Controls.Add(this.R);
+            this.Controls.Add(this.label16);
+            this.Controls.Add(this.lenght_lab);
+            this.Controls.Add(this.mean_size_lab);
             this.Name = "Form1";
             this.Text = "Cellar Automata";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -644,6 +690,10 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button phase_bt;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label lenght_lab;
+        private System.Windows.Forms.Button mark_bdr_bt;
+        private System.Windows.Forms.Label mean_size_lab;
     }
 }
 
